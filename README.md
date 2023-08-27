@@ -34,11 +34,11 @@ $$u_x=\cos x\sin y e^{-2\nu t},\quad u_y=-\sin x\cos y e^{-2\nu t}$$
 時間積分にはFractional Step法を用います．
 
 1. $`n`$step目の速度場$`u^n`$から，圧力項を除き，仮の速度場$`u^\ast`$を求めます．
-$$\frac{u^\ast-u^n}{\Delta t}=-(u^n\cdot\nabla)u^n + \nabla^2 u^n -\phi\nabla\mu $$
+$$\frac{u^\ast-u^n}{\Delta t}=-(u^n\cdot\nabla)u^n + \nabla^2 u^n -\phi^n\nabla\mu^n $$
 
 2. 非圧縮条件を満たすように圧力を決定します．Jacobiの反復法を用います．
 
-$$\nabla^2 p = - \nabla \cdot u^\ast$$
+$$\nabla^2 p = \frac{\nabla \cdot u^\ast}{\Delta t}$$
 
 3. 圧力項の寄与分を足します．
 $$\frac{u^{n+1}-u^\ast}{\Delta t}=-\nabla p$$
