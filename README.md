@@ -79,7 +79,7 @@ C++っぽく，ポインタを`unique_ptr`で管理し．多次元配列にキ�
 
 # 実装
 
-Github: 
+Github: https://github.com/so-miyamoto/NSCHmpi
 
 
 # 参考
