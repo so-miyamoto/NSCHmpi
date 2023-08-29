@@ -55,6 +55,8 @@ $$\mu = \alpha(\phi^3-\phi-\gamma\nabla^2\phi)$$
 
 ## 実装
 
+Github: https://github.com/so-miyamoto/NSCHmpi
+
 計算ドメインは周期境界条件で$N_x\times N_y$点のRegular Gridとする．ここで$\Delta x=\Delta y=1$．
 
 ここで，MPI実装のため，領域を$x$方向にプロセス数$N_p$等分する．
@@ -76,10 +78,6 @@ C++っぽく，ポインタを`unique_ptr`で管理し．多次元配列にキ�
   // phi is 3d array
 ~~~
 
-
-# 実装
-
-Github: https://github.com/so-miyamoto/NSCHmpi
 
 
 # 参考

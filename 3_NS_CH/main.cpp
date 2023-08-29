@@ -172,9 +172,10 @@ int main(int argc, char** argu)
       double residue = 0.0;
       for(int i = 1; i <= NX; i++){
         for(int j = 1; j <= NY; j++){
-          double e = p[tp][i][j] - p[tn][i][j];
+          double pnew = (1.0-SOR_COEFF)*p[tn][i][j] + SOR_COEFF*p[tp][i][j];
+          double e = pnew - p[tn][i][j];
           residue += e*e;
-          p[tn][i][j] = (1.0-SOR_COEFF)*p[tn][i][j] + SOR_COEFF*p[tp][i][j];
+          p[tn][i][j] = pnew;
         }
       }
       residue = std::sqrt(residue);

@@ -191,12 +191,13 @@ MPI_Sendrecv( &up[1      ],2*(NY+2),MPI_DOUBLE,rank_l,0,
       double residue = 0.0;
       for(int i = 1; i <= NXloc; i++){
         for(int j = 1; j <= NY; j++){
-          double e = p[tp][i][j] - p[tn][i][j];
+          double pnew = (1.0-SOR_COEFF)*p[tn][i][j] + SOR_COEFF*p[tp][i][j];
+          double e = pnew - p[tn][i][j];
           residue += e*e;
-          p[tn][i][j] = (1.0-SOR_COEFF)*p[tn][i][j] + SOR_COEFF*p[tp][i][j];
+          p[tn][i][j] = pnew;
         }
       }
-      double residue_sum = 0.0; MPI_Allreduce(&residue_sum,&residue,1,MPI_DOUBLE,MPI_SUM,MPI_COMM_WORLD);
+      double residue_sum = 0.0; MPI_Allreduce(&residue,&residue_sum,1,MPI_DOUBLE,MPI_SUM,MPI_COMM_WORLD);
       residue_sum = std::sqrt(residue_sum);
       // boundary condition of pressure
       for(int i = 1; i <= NXloc; i++){
@@ -209,11 +210,11 @@ MPI_Sendrecv( &p[tn][1      ],NY+2,MPI_DOUBLE,rank_l,0,
               &p[tn][NXloc+1],NY+2,MPI_DOUBLE,rank_r,0,MPI_COMM_WORLD,MPI_STATUSES_IGNORE);
 
       if( residue_sum < TOLERANCE ) break;
-      if( (itr == max_iter-1) || !std::isfinite(residue) ) {
+      if( (itr == max_iter-1) || !std::isfinite(residue_sum) ) {
         std::cerr << "ERROR: not converged: poisson solver" << std::endl;
         std::cerr << "step: " << step << std::endl;
         std::cerr << "iterator: " << itr << std::endl;
-        std::cerr << "residue: " << residue << std::endl;
+        std::cerr << "residue: " << residue_sum << std::endl;
         return 1;
       }
     }
