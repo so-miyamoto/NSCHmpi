@@ -26,17 +26,16 @@ $$u_x=\cos x\sin y e^{-2\nu t},\quad u_y=-\sin x\cos y e^{-2\nu t}$$
 
 ## NS方程式の数値解法
 
-コロケート格子，つまりコントロールボリュームの真ん中に物理量$u,p$が配置されているとします．
+コロケート格子，つまりコントロールボリュームの真ん中に物理量$`u,p,\phi\mu`$が配置されているとします．
 
 空間的には中心差分で2次精度，時間的に陽的Euler法で1次精度で解きます．
 
 時間積分にはFractional Step法を用います．
 
 1. $`n`$step目の速度場$`u^n`$から，圧力項を除き，仮の速度場$`u^\ast`$を求めます．
-$$\frac{u^\ast-u^n}{\Delta t}=-(u^n\cdot\nabla)u^n + \nabla^2 u^n -\phi\nabla\mu $$
+   $$\frac{u^\ast-u^n}{\Delta t}=-(u^n\cdot\nabla)u^n + \nabla^2 u^n -\phi\nabla\mu $$
 
 2. 非圧縮条件を満たすように圧力を決定します．Jacobiの反復法を用います．
-
 $$\nabla^2 p = \frac{\nabla \cdot u^\ast}{\Delta t}$$
 
 3. 圧力項の寄与分を足します．
